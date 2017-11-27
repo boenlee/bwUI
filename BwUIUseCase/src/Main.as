@@ -24,7 +24,7 @@ package
 		
 		private function initView():void
 		{
-			
+			trace("Main Init");
 		}
 		
 	}
