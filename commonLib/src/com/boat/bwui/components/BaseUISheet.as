@@ -1,6 +1,7 @@
 package com.boat.bwui.components 
 {
 	import com.boat.bwui.components.BaseUIComponent;
+	import com.boat.bwui.render.RenderFlag;
 	import flash.utils.Dictionary;
 	
 	/**
@@ -26,12 +27,7 @@ package com.boat.bwui.components
 		
 		public function addChild(child:BaseUIComponent):BaseUIComponent
 		{
-			if (child)
-			{
-				_childList.push(child);
-				_childDic[child.name] = child;
-			}
-			return child;
+			return addChildAt(child, _childList.length);
 		}
 		
 		public function addChildAt(child:BaseUIComponent, index:int):BaseUIComponent
@@ -51,6 +47,8 @@ package com.boat.bwui.components
 					_childList.splice(index, 0, child);
 				}
 				_childDic[child.name] = child;
+				child.setParent(this);
+				setRenderInfo(RenderFlag.childIndex);
 			}
 			return child;
 		}
@@ -64,9 +62,16 @@ package com.boat.bwui.components
 				{
 					_childList.splice(index, 1);
 					delete _childDic[child.name];
+					child.setParent(null);
+					setRenderInfo(RenderFlag.childIndex);
 				}
 			}
 			return child;
+		}
+		
+		public function removeChildAt(index:int):BaseUIComponent
+		{
+			return removeChild(getChildByIndex(index));
 		}
 		
 		public function getChildByName(nm:String):BaseUIComponent
@@ -77,6 +82,11 @@ package com.boat.bwui.components
 		public function getChildByIndex(index:int):BaseUIComponent
 		{
 			return _childList[index];
+		}
+		
+		public function getChildIndex(child:BaseUIComponent):int
+		{
+			return _childList.indexOf(child);
 		}
 	}
 

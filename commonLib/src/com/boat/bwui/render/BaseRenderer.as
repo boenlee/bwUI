@@ -3,6 +3,7 @@ package com.boat.bwui.render
 	import com.boat.bwui.components.BaseUIComponent;
 	import com.boat.bwui.components.BaseUISheet;
 	import com.boat.bwui.components.StyleUIComponent;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
 	/**
@@ -12,6 +13,8 @@ package com.boat.bwui.render
 	public class BaseRenderer extends Sprite implements IRenderer 
 	{
 		private var _component:BaseUIComponent;
+		
+		private var _renderFlags:Number = 0;
 		
 		public function BaseRenderer() 
 		{
@@ -24,6 +27,11 @@ package com.boat.bwui.render
 		public function setComponent(comp:BaseUIComponent):void 
 		{
 			_component = comp;
+		}
+		
+		public function setRenderInfo(renderFlag:Number):void
+		{
+			_renderFlags |= renderFlag;
 		}
 		
 		public function render():void 
@@ -53,8 +61,8 @@ package com.boat.bwui.render
 						renderer = new BaseRenderer();
 						child.setRenderer(renderer);
 					}
-					renderer.render();
-					addChild(renderer);
+					//renderer.render();
+					addChild(renderer as DisplayObject);
 				}
 			}
 		}
@@ -70,7 +78,7 @@ package com.boat.bwui.render
 				
 				for (var i:int = 0; i < uiSheet.numChild; i++) 
 				{					
-					addChild(renderer);
+					addChild(renderer as DisplayObject);
 				}
 			}
 		}

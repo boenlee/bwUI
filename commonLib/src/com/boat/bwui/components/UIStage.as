@@ -11,11 +11,7 @@ package com.boat.bwui.components
 		
 		public function UIStage() 
 		{
-			if (_instance)
-			{
-				throw new Error("Exist UIStage Instance");
-			}
-			super();
+			super("UIStage");
 		}
 		
 		public static function get instance():UIStage
@@ -41,11 +37,11 @@ package com.boat.bwui.components
 		{
 			if (lyr is String)
 			{
-				return getChildByName(lyr as String);
+				return getChildByName(lyr as String) as BaseUISheet;
 			}
 			else if (lyr is Number)
 			{
-				return getChildByIndex(lyr);
+				return getChildByIndex(lyr) as BaseUISheet;
 			}
 			return null;
 		}

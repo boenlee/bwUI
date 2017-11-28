@@ -9,13 +9,14 @@ package com.boat.bwui.render
 	{
 		private static var _instance:UIRenderEngine;
 		
+		private var _rootRender:IRenderer;
+		
 		public function UIRenderEngine() 
 		{
 			if (_instance)
 			{
 				throw new Error("Exist UIRenderEngine Instance");
 			}
-			super();
 		}
 		
 		public static function get instance():UIRenderEngine
@@ -27,14 +28,14 @@ package com.boat.bwui.render
 			return _instance;
 		}
 		
-		public function init():void
+		public function init(rootRender:IRenderer):void
 		{
-			
+			_rootRender = rootRender;
 		}
 		
 		public function render():void
 		{
-			UIStage.instance.getRenderer().render();
+			
 		}
 	}
 

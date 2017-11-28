@@ -3,6 +3,8 @@ package com.boat.bwui.components
 	import com.boat.bwui.mgr.UIComponentManager;
 	import com.boat.bwui.render.BaseRenderer;
 	import com.boat.bwui.render.IRenderer;
+	import com.boat.bwui.render.RenderFlag;
+	import com.boat.bwui.utils.ClassUtils;
 	import flash.events.EventDispatcher;
 	
 	/**
@@ -11,6 +13,8 @@ package com.boat.bwui.components
 	 */
 	public class BaseUIComponent extends EventDispatcher 
 	{
+		protected var _parent:BaseUISheet;
+		
 		protected var _name:String;
 		protected var _x:Number;
 		protected var _y:Number;
@@ -47,6 +51,7 @@ package com.boat.bwui.components
 		public function set width(value:Number):void 
 		{
 			_width = value;
+			setRenderInfo(RenderFlag.width);
 		}
 		
 		public function get height():Number 
@@ -57,6 +62,7 @@ package com.boat.bwui.components
 		public function set height(value:Number):void 
 		{
 			_height = value;
+			setRenderInfo(RenderFlag.height);
 		}
 		
 		public function get x():Number 
@@ -67,6 +73,7 @@ package com.boat.bwui.components
 		public function set x(value:Number):void 
 		{
 			_x = value;
+			setRenderInfo(RenderFlag.x);
 		}
 		
 		public function get y():Number 
@@ -77,6 +84,7 @@ package com.boat.bwui.components
 		public function set y(value:Number):void 
 		{
 			_y = value;
+			setRenderInfo(RenderFlag.y);
 		}
 		
 		public function setSize(w:Number, h:Number):void
@@ -91,14 +99,25 @@ package com.boat.bwui.components
 			y = py;
 		}
 		
-		public function get enabled():Number 
+		public function get enabled():Boolean 
 		{
 			return _enabled;
 		}
 		
-		public function set enabled(value:Number):void 
+		public function set enabled(value:Boolean):void 
 		{
 			_enabled = value;
+			setRenderInfo(RenderFlag.enabled);
+		}
+		
+		public function get parent():BaseUISheet
+		{
+			return _parent;
+		}
+		
+		internal function setParent(sheet:BaseUISheet):void
+		{
+			_parent = sheet;
 		}
 		
 		public function addTo(parent:BaseUISheet):void
@@ -133,6 +152,19 @@ package com.boat.bwui.components
 		public function getRenderer():IRenderer
 		{
 			return _renderer;
+		}
+		
+		protected function setRenderInfo(renderFlag:Number):void
+		{
+			if (_renderer)
+			{
+				_renderer.setRenderInfo(renderFlag);
+			}
+		}
+		
+		override public function toString():String 
+		{
+			return "[" + ClassUtils.getOnlyClassName(this) + " name=" + name + "]";
 		}
 	}
 
