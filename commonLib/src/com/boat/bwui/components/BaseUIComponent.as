@@ -1,10 +1,12 @@
 package com.boat.bwui.components 
 {
+	import com.boat.bwui.events.UIEvent;
 	import com.boat.bwui.mgr.UIComponentManager;
 	import com.boat.bwui.render.BaseRenderer;
 	import com.boat.bwui.render.IRenderer;
 	import com.boat.bwui.render.RenderFlag;
 	import com.boat.bwui.utils.ClassUtils;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
 	/**
@@ -28,8 +30,6 @@ package com.boat.bwui.components
 		{
 			super(this);
 			_name = nm;
-			_renderer = new BaseRenderer();
-			_renderer.setComponent(this);
 			UIComponentManager.instance.addComponent(this);
 		}
 		
@@ -51,7 +51,7 @@ package com.boat.bwui.components
 		public function set width(value:Number):void 
 		{
 			_width = value;
-			setRenderInfo(RenderFlag.width);
+			setRenderFlag(RenderFlag.width);
 		}
 		
 		public function get height():Number 
@@ -62,7 +62,7 @@ package com.boat.bwui.components
 		public function set height(value:Number):void 
 		{
 			_height = value;
-			setRenderInfo(RenderFlag.height);
+			setRenderFlag(RenderFlag.height);
 		}
 		
 		public function get x():Number 
@@ -73,7 +73,7 @@ package com.boat.bwui.components
 		public function set x(value:Number):void 
 		{
 			_x = value;
-			setRenderInfo(RenderFlag.x);
+			setRenderFlag(RenderFlag.x);
 		}
 		
 		public function get y():Number 
@@ -84,7 +84,7 @@ package com.boat.bwui.components
 		public function set y(value:Number):void 
 		{
 			_y = value;
-			setRenderInfo(RenderFlag.y);
+			setRenderFlag(RenderFlag.y);
 		}
 		
 		public function setSize(w:Number, h:Number):void
@@ -107,7 +107,7 @@ package com.boat.bwui.components
 		public function set enabled(value:Boolean):void 
 		{
 			_enabled = value;
-			setRenderInfo(RenderFlag.enabled);
+			setRenderFlag(RenderFlag.enabled);
 		}
 		
 		public function get parent():BaseUISheet
@@ -122,17 +122,25 @@ package com.boat.bwui.components
 		
 		public function addTo(parent:BaseUISheet):void
 		{
-			if (parent)
+			if (_parent)
 			{
-				parent.addChild(this);
+				_parent.addChild(this);
 			}
 		}
 		
 		public function addToAt(parent:BaseUISheet, index:int):void
 		{
-			if (parent)
+			if (_parent)
 			{
-				parent.addChildAt(this, index);
+				_parent.addChildAt(this, index);
+			}
+		}
+		
+		public function removeFromParent():void
+		{
+			if (_parent)
+			{
+				_parent.removeChild(this);
 			}
 		}
 		
@@ -145,7 +153,7 @@ package com.boat.bwui.components
 			_renderer = renderer;
 			if (_renderer)
 			{
-				_renderer.setComponent(this);
+				_renderer.component = this;
 			}
 		}
 		
@@ -154,12 +162,25 @@ package com.boat.bwui.components
 			return _renderer;
 		}
 		
-		protected function setRenderInfo(renderFlag:Number):void
+		protected function setRenderFlag(renderFlag:Number):void
 		{
 			if (_renderer)
 			{
-				_renderer.setRenderInfo(renderFlag);
+				_renderer.setRenderFlag(renderFlag);
 			}
+		}
+		
+		override public function dispatchEvent(event:Event):Boolean 
+		{
+			var ret:Boolean = super.dispatchEvent(event);
+			if (event.bubbles)
+			{
+				if (_parent)
+				{
+					_parent.dispatchEvent(event);
+				}
+			}
+			return ret;
 		}
 		
 		override public function toString():String 

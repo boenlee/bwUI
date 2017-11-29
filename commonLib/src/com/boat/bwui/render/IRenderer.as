@@ -8,8 +8,10 @@ package com.boat.bwui.render
 	 */
 	public interface IRenderer 
 	{
-		function setComponent(comp:BaseUIComponent):void;
-		function setRenderInfo(renderFlag:Number):void;
+		function set component(comp:BaseUIComponent):void;
+		function get component():BaseUIComponent
+		function setRenderFlag(renderFlag:Number):void;
+		function getRenderFlags():Number;
 		function dispose():void;
 	}
 	

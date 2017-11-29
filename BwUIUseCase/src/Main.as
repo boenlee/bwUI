@@ -1,7 +1,10 @@
 package
 {
 	import com.boat.bwui.components.UIStage;
+	import com.boat.bwui.mgr.GlobalUnitHub;
+	import com.boat.bwui.mgr.UIComponentManager;
 	import com.boat.bwui.render.BaseRenderer;
+	import com.boat.bwui.render.RenderableUICompPool;
 	import com.boat.bwui.render.UIRenderEngine;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -27,19 +30,24 @@ package
 		
 		private function initView():void
 		{
-			var uiRootRender:BaseRenderer = new BaseRenderer();
-			addChild(uiRootRender);
-			UIStage.instance.x = 0;
-			UIStage.instance.y = 0;
-			UIStage.instance.width = stage.stageWidth;
-			UIStage.instance.height = stage.stageHeight;
-			UIStage.instance.init(uiRootRender);
-			UIRenderEngine.instance.init(uiRootRender);
+			var uiRootRenderer:BaseRenderer = new BaseRenderer();
+			addChild(uiRootRenderer);
+			UIStage.instance.move(0, 0);
+			UIStage.instance.setSize(stage.stageWidth, stage.stageHeight);
+			UIStage.instance.init(uiRootRenderer);
+			UIRenderEngine.instance.init(uiRootRenderer);
 			
 			UIStage.instance.createLayer("layer0", 0);
 			UIStage.instance.createLayer("layer1", 1);
 			
+			RenderableUICompPool.instance.init(UIStage.instance);
+			
 			trace(UIStage.instance);
+			
+			GlobalUnitHub.uiStage = UIStage.instance;
+			GlobalUnitHub.uiComponentManager = UIComponentManager.instance;
+			GlobalUnitHub.uiRenderEngine = UIRenderEngine.instance;
+			GlobalUnitHub.renderableUICompPool = RenderableUICompPool.instance;
 		}
 		
 	}

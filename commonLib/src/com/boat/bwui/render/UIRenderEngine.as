@@ -1,6 +1,8 @@
 package com.boat.bwui.render 
 {
-	import com.boat.bwui.components.UIStage;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.utils.Dictionary;
 	/**
 	 * ...
 	 * @author Boen
@@ -9,7 +11,11 @@ package com.boat.bwui.render
 	{
 		private static var _instance:UIRenderEngine;
 		
-		private var _rootRender:IRenderer;
+		private var _rootRenderer:IRenderer;
+		
+		private var _rendererPool:Dictionary;
+		
+		private var _frameLooper:Sprite;
 		
 		public function UIRenderEngine() 
 		{
@@ -17,6 +23,7 @@ package com.boat.bwui.render
 			{
 				throw new Error("Exist UIRenderEngine Instance");
 			}
+			_rendererPool = new Dictionary();
 		}
 		
 		public static function get instance():UIRenderEngine
@@ -28,15 +35,46 @@ package com.boat.bwui.render
 			return _instance;
 		}
 		
-		public function init(rootRender:IRenderer):void
+		public function init(rootRenderer:IRenderer):void
 		{
-			_rootRender = rootRender;
+			_rootRenderer = rootRenderer;
+			
+			_frameLooper = new Sprite();
+			_frameLooper.addEventListener(Event.ENTER_FRAME, onFrameLoop);
 		}
 		
-		public function render():void
+		public function addToRenderPool(renderer:IRenderer):void
 		{
-			
+			if (renderer && renderer.component)
+			{
+				if (RenderableUICompPool.instance.isRenderable(renderer.component))
+				{
+					_rendererPool[renderer.component.name] = renderer;
+				}
+			}
 		}
+		
+		public function removeFromRenderPool(renderer:IRenderer):void
+		{
+			if (renderer && renderer.component)
+			{
+				delete _rendererPool[renderer.component.name];
+			}
+		}
+		
+		private function onFrameLoop(e:Event):void 
+		{
+			render();
+		}
+		
+		private function render():void
+		{
+			for each (var renderer:IRenderer in _rendererPool) 
+			{
+				
+			}
+		}
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.boat.bwui.components 
 {
 	import com.boat.bwui.components.BaseUIComponent;
+	import com.boat.bwui.events.UIEvent;
 	import com.boat.bwui.render.RenderFlag;
 	import flash.utils.Dictionary;
 	
@@ -34,6 +35,7 @@ package com.boat.bwui.components
 		{
 			if (child)
 			{
+				child.removeFromParent();
 				if (index < 0)
 				{
 					_childList.unshift(child);
@@ -48,7 +50,8 @@ package com.boat.bwui.components
 				}
 				_childDic[child.name] = child;
 				child.setParent(this);
-				setRenderInfo(RenderFlag.childIndex);
+				dispatchEvent(new UIEvent(UIEvent.ADDED, child, true));
+				setRenderFlag(RenderFlag.childIndex);
 			}
 			return child;
 		}
@@ -63,7 +66,8 @@ package com.boat.bwui.components
 					_childList.splice(index, 1);
 					delete _childDic[child.name];
 					child.setParent(null);
-					setRenderInfo(RenderFlag.childIndex);
+					dispatchEvent(new UIEvent(UIEvent.REMOVED, child, true));
+					setRenderFlag(RenderFlag.childIndex);
 				}
 			}
 			return child;

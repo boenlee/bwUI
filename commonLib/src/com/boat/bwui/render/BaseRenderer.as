@@ -14,7 +14,7 @@ package com.boat.bwui.render
 	{
 		private var _component:BaseUIComponent;
 		
-		private var _renderFlags:Number = 0;
+		private var _renderFlags:Number = -1;
 		
 		public function BaseRenderer() 
 		{
@@ -24,14 +24,30 @@ package com.boat.bwui.render
 		
 		/* INTERFACE com.boat.bwui.render.IRenderer */
 		
-		public function setComponent(comp:BaseUIComponent):void 
+		public function set component(comp:BaseUIComponent):void 
 		{
 			_component = comp;
 		}
 		
-		public function setRenderInfo(renderFlag:Number):void
+		public function get component():BaseUIComponent
 		{
+			return _component;
+		}
+		
+		public function setRenderFlag(renderFlag:Number):void
+		{
+			if (_renderFlags == -1)
+			{
+				_renderFlags = 0;
+			}
+			
 			_renderFlags |= renderFlag;
+			UIRenderEngine.instance.addToRenderPool(this);
+		}
+		
+		public function getRenderFlags():Number
+		{
+			return _renderFlags;
 		}
 		
 		public function render():void 

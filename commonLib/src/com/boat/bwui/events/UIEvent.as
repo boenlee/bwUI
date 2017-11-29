@@ -9,7 +9,10 @@ package com.boat.bwui.events
 	 */
 	public class UIEvent extends Event 
 	{
-		public static const ADD_TO_RENDER:String = "addToRender";
+		public static const ADDED:String = "added";
+		public static const ADDED_TO_STAGE:String = "addedToStage";
+		public static const REMOVED:String = "removed";
+		public static const REMOVED_FROM_STAGE:String = "removedFromStage";
 		
 		private var _comp:BaseUIComponent;
 		
