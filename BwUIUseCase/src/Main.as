@@ -4,7 +4,7 @@ package
 	import com.boat.bwui.mgr.GlobalUnitHub;
 	import com.boat.bwui.mgr.UIComponentManager;
 	import com.boat.bwui.render.BaseRenderer;
-	import com.boat.bwui.render.RenderableUICompPool;
+	import com.boat.bwui.render.RenderablePool;
 	import com.boat.bwui.render.UIRenderEngine;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -40,14 +40,14 @@ package
 			UIStage.instance.createLayer("layer0", 0);
 			UIStage.instance.createLayer("layer1", 1);
 			
-			RenderableUICompPool.instance.init(UIStage.instance);
+			RenderablePool.instance.init(UIStage.instance);
 			
 			trace(UIStage.instance);
 			
 			GlobalUnitHub.uiStage = UIStage.instance;
 			GlobalUnitHub.uiComponentManager = UIComponentManager.instance;
 			GlobalUnitHub.uiRenderEngine = UIRenderEngine.instance;
-			GlobalUnitHub.renderableUICompPool = RenderableUICompPool.instance;
+			GlobalUnitHub.renderablePool = RenderablePool.instance;
 		}
 		
 	}

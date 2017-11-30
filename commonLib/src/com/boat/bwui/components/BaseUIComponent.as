@@ -23,6 +23,7 @@ package com.boat.bwui.components
 		protected var _width:Number;
 		protected var _height:Number;
 		protected var _enabled:Boolean;
+		protected var _visible:Boolean;
 		
 		protected var _renderer:IRenderer;
 		
@@ -110,6 +111,17 @@ package com.boat.bwui.components
 			setRenderFlag(RenderFlag.enabled);
 		}
 		
+		public function get visible():Boolean 
+		{
+			return _visible;
+		}
+		
+		public function set visible(value:Boolean):void 
+		{
+			_visible = value;
+			setRenderFlag(RenderFlag.visible);
+		}
+		
 		public function get parent():BaseUISheet
 		{
 			return _parent;
@@ -162,7 +174,7 @@ package com.boat.bwui.components
 			return _renderer;
 		}
 		
-		protected function setRenderFlag(renderFlag:Number):void
+		public function setRenderFlag(renderFlag:Number):void
 		{
 			if (_renderer)
 			{

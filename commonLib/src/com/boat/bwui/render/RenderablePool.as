@@ -8,32 +8,36 @@ package com.boat.bwui.render
 	 * ...
 	 * @author Boen
 	 */
-	public class RenderableUICompPool 
+	public class RenderablePool 
 	{
-		private static var _instance:RenderableUICompPool;
+		private static var _instance:RenderablePool;
 		
-		private var _pool:Dictionary;
+		private var _renderablePool:Dictionary;
 		
-		public function RenderableUICompPool() 
+		private var _renderingPool:Dictionary;
+		
+		public function RenderablePool() 
 		{
 			if (_instance)
 			{
 				throw new Error("Exist RenderableUICompPool Instance");
 			}
-			_pool = new Dictionary();
 		}
 		
-		public static function get instance():RenderableUICompPool
+		public static function get instance():RenderablePool
 		{
 			if (!_instance)
 			{
-				_instance = new RenderableUICompPool();
+				_instance = new RenderablePool();
 			}
 			return _instance;
 		}
 		
 		public function init(rootComp:BaseUIComponent):void
 		{
+			_renderablePool = new Dictionary();
+			_renderingPool = new Dictionary();
+			
 			rootComp.addEventListener(UIEvent.ADDED, onCompAdded);
 			rootComp.addEventListener(UIEvent.REMOVED, onCompRemoved);
 			addToPool(rootComp);
@@ -51,11 +55,12 @@ package com.boat.bwui.render
 		
 		private function addToPool(comp:BaseUIComponent):void
 		{
-			if (!comp || _pool[comp.name] != null)
+			if (!comp || _renderablePool[comp.name] != null)
 			{
 				return;
 			}
-			_pool[comp.name] = comp;
+			_renderablePool[comp.name] = comp;
+			_renderingPool[comp.name] = comp;
 			comp.dispatchEvent(new UIEvent(UIEvent.ADDED_TO_STAGE, comp));
 			var sheet:BaseUISheet = comp as BaseUISheet;
 			if (sheet)
@@ -69,11 +74,12 @@ package com.boat.bwui.render
 		
 		private function removeFromPool(comp:BaseUIComponent):void
 		{
-			if (!comp || _pool[comp.name] == null)
+			if (!comp || _renderablePool[comp.name] == null)
 			{
 				return;
 			}
-			delete _pool[comp.name];
+			delete _renderablePool[comp.name];
+			delete _renderingPool[comp.name];
 			comp.dispatchEvent(new UIEvent(UIEvent.REMOVED_FROM_STAGE, comp));
 			var sheet:BaseUISheet = comp as BaseUISheet;
 			if (sheet)
@@ -85,13 +91,37 @@ package com.boat.bwui.render
 			}
 		}
 		
+		public function addToRenderingPool(comp:BaseUIComponent):void
+		{
+			if (comp)
+			{
+				if (isRenderable(comp))
+				{
+					_renderingPool[comp.name] = comp;
+				}
+			}
+		}
+		
+		public function removeFromRenderingPool(comp:BaseUIComponent):void
+		{
+			if (comp)
+			{
+				delete _renderingPool[comp.name];
+			}
+		}
+		
 		public function isRenderable(comp:BaseUIComponent):Boolean
 		{
 			if (!comp)
 			{
 				return false;
 			}
-			return _pool[comp.name] != null;
+			return _renderablePool[comp.name] != null;
+		}
+		
+		public function getRenderingPool():Dictionary
+		{
+			return _renderingPool;
 		}
 		
 	}

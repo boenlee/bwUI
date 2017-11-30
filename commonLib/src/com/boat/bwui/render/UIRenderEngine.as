@@ -1,5 +1,6 @@
 package com.boat.bwui.render 
 {
+	import com.boat.bwui.components.BaseUIComponent;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
@@ -13,9 +14,9 @@ package com.boat.bwui.render
 		
 		private var _rootRenderer:IRenderer;
 		
-		private var _rendererPool:Dictionary;
-		
 		private var _frameLooper:Sprite;
+		
+		private var _rendererFactory:RendererFactory;
 		
 		public function UIRenderEngine() 
 		{
@@ -23,7 +24,6 @@ package com.boat.bwui.render
 			{
 				throw new Error("Exist UIRenderEngine Instance");
 			}
-			_rendererPool = new Dictionary();
 		}
 		
 		public static function get instance():UIRenderEngine
@@ -41,26 +41,9 @@ package com.boat.bwui.render
 			
 			_frameLooper = new Sprite();
 			_frameLooper.addEventListener(Event.ENTER_FRAME, onFrameLoop);
-		}
-		
-		public function addToRenderPool(renderer:IRenderer):void
-		{
-			if (renderer && renderer.component)
-			{
-				if (RenderableUICompPool.instance.isRenderable(renderer.component))
-				{
-					_rendererPool[renderer.component.name] = renderer;
-				}
-			}
-		}
-		
-		public function removeFromRenderPool(renderer:IRenderer):void
-		{
-			if (renderer && renderer.component)
-			{
-				delete _rendererPool[renderer.component.name];
-			}
-		}
+			
+			_rendererFactory = new RendererFactory();
+		}		
 		
 		private function onFrameLoop(e:Event):void 
 		{
@@ -69,9 +52,24 @@ package com.boat.bwui.render
 		
 		private function render():void
 		{
-			for each (var renderer:IRenderer in _rendererPool) 
+			var renderingPool:Dictionary = RenderablePool.instance.getRenderingPool();
+			var comp:BaseUIComponent;
+			var renderer:IRenderer;
+			for each (comp in renderingPool)
 			{
-				
+				renderer = comp.getRenderer();
+				if (!renderer)
+				{
+					renderer = _rendererFactory.getRenderer(comp);
+					comp.setRenderer(renderer);
+					comp.setRenderFlag(RenderFlag.all);
+				}
+			}
+			
+			for each (comp in renderingPool) 
+			{
+				renderer = comp.getRenderer();
+				renderer.render();
 			}
 		}
 		
