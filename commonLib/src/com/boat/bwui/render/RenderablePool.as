@@ -22,6 +22,8 @@ package com.boat.bwui.render
 			{
 				throw new Error("Exist RenderableUICompPool Instance");
 			}
+			_renderablePool = new Dictionary();
+			_renderingPool = new Dictionary();
 		}
 		
 		public static function get instance():RenderablePool
@@ -35,9 +37,6 @@ package com.boat.bwui.render
 		
 		public function init(rootComp:BaseUIComponent):void
 		{
-			_renderablePool = new Dictionary();
-			_renderingPool = new Dictionary();
-			
 			rootComp.addEventListener(UIEvent.ADDED, onCompAdded);
 			rootComp.addEventListener(UIEvent.REMOVED, onCompRemoved);
 			addToPool(rootComp);

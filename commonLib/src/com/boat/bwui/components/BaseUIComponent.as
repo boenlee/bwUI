@@ -18,12 +18,12 @@ package com.boat.bwui.components
 		protected var _parent:BaseUISheet;
 		
 		protected var _name:String;
-		protected var _x:Number;
-		protected var _y:Number;
-		protected var _width:Number;
-		protected var _height:Number;
-		protected var _enabled:Boolean;
-		protected var _visible:Boolean;
+		protected var _x:Number = 0;
+		protected var _y:Number = 0;
+		protected var _width:Number = 0;
+		protected var _height:Number = 0;
+		protected var _enabled:Boolean = true;
+		protected var _visible:Boolean = true;
 		
 		protected var _renderer:IRenderer;
 		

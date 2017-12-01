@@ -15,26 +15,28 @@ package com.boat.bwui.render
 		
 		private function get styleUI():StyleUIComponent
 		{
-			
+			return _component as StyleUIComponent;
 		}
 		
 		override protected function render_impl():void 
 		{
-			var tempRenderFlags:Number = 0;
+			/*var tempRenderFlags:Number = 0;
 			
 			tempRenderFlags |= removeRenderFlag(RenderFlag.width);
 			tempRenderFlags |= removeRenderFlag(RenderFlag.height);
 			
 			super.render_impl();
 			
-			_renderFlags |= tempRenderFlags;
+			_renderFlags |= tempRenderFlags;*/
 			
 			if (canRenderProp(RenderFlag.width) || canRenderProp(RenderFlag.height))
 			{
-				if (styleUI)
+				/*if (styleUI)
 				{
 					addChild(styleUI.getCurrentGraphic());
-				}
+				}*/
+				
+				trace(this, "wh");
 			}
 			
 			

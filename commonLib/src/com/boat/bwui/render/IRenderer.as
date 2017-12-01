@@ -12,7 +12,7 @@ package com.boat.bwui.render
 		function get component():BaseUIComponent
 		function setRenderFlag(renderFlag:Number):void;
 		function getRenderFlags():Number;
-		function render(renderAll:Boolean = false):void;
+		function render():void;
 		function dispose():void;
 	}
 	

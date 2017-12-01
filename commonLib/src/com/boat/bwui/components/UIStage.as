@@ -25,7 +25,7 @@ package com.boat.bwui.components
 		
 		public function init(renderer:IRenderer):void
 		{
-			_renderer = renderer;
+			setRenderer(renderer);
 		}
 		
 		public function createLayer(nm:String, index:int):void

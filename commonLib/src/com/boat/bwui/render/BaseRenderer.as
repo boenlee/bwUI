@@ -41,14 +41,21 @@ package com.boat.bwui.render
 			return _renderFlags;
 		}
 		
-		protected function removeRenderFlag(renderFlag:Number):Number
+		protected function removeRenderFlags(...flags):Number
 		{
-			if ((_renderFlags & renderFlag) != 0)
+			var removedFlags:Number = 0;
+			var flag:Number;
+			for (var i:int = 0; i < flags.length; i++) 
 			{
-				_renderFlags ^= renderFlag;
-				return renderFlag;
+				flag = flags[i];
+				if ((_renderFlags & flag) != 0)
+				{
+					_renderFlags ^= flag;
+					removedFlags |= flag;
+				}
 			}
-			return 0;
+			
+			return removedFlags;
 		}
 		
 		protected function canRenderProp(flag:Number):Boolean
@@ -58,10 +65,15 @@ package com.boat.bwui.render
 		
 		public function render():void 
 		{
+			print("render")
+			
+			print(_renderFlags);
+			
 			if (canRenderProp(RenderFlag.visible))
 			{
 				visible = _component.visible;
 			}
+			printProp("visible");
 			if (!visible)
 			{
 				return;
@@ -72,21 +84,30 @@ package com.boat.bwui.render
 		
 		protected function render_impl():void
 		{
-			
-		}
-		
-		protected function callSuperRenderImplExcludeSomeFlags(...flags):void
-		{
-			if (!(this is BaseRenderer))
-			{
-				//super
-			}
+			print("base render_impl")
 		}
 		
 		public function dispose():void
 		{
 			_component = null;
 			_renderFlags = 0;
+		}
+		
+		protected function print(...strs):void
+		{
+			trace.apply(null, [_component.name].concat(strs));
+		}
+		
+		protected function printProp(propName:String):void
+		{
+			if (hasOwnProperty(propName))
+			{
+				trace(_component.name, propName + "=" + this[propName]);
+			}
+			else
+			{
+				trace(_component.name, " 没有属性" + propName);
+			}
 		}
 		
 	}

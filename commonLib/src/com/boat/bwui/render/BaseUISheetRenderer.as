@@ -23,11 +23,18 @@ package com.boat.bwui.render
 		
 		override protected function render_impl():void 
 		{
+			var removedFlags:Number = removeRenderFlags(RenderFlag.width)
 			super.render_impl();
+			_renderFlags |= removedFlags;
 			
 			if (canRenderProp(RenderFlag.childIndex))
 			{
 				refreshZIndex();
+			}
+			
+			if (canRenderProp(RenderFlag.width))
+			{
+				print("www");
 			}
 		}
 		

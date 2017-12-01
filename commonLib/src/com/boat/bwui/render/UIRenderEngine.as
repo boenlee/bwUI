@@ -12,8 +12,6 @@ package com.boat.bwui.render
 	{
 		private static var _instance:UIRenderEngine;
 		
-		private var _rootRenderer:IRenderer;
-		
 		private var _frameLooper:Sprite;
 		
 		private var _rendererFactory:RendererFactory;
@@ -35,10 +33,8 @@ package com.boat.bwui.render
 			return _instance;
 		}
 		
-		public function init(rootRenderer:IRenderer):void
-		{
-			_rootRenderer = rootRenderer;
-			
+		public function init():void
+		{			
 			_frameLooper = new Sprite();
 			_frameLooper.addEventListener(Event.ENTER_FRAME, onFrameLoop);
 			
@@ -70,6 +66,7 @@ package com.boat.bwui.render
 			{
 				renderer = comp.getRenderer();
 				renderer.render();
+				RenderablePool.instance.removeFromRenderingPool(comp);
 			}
 		}
 		
