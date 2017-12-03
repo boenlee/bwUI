@@ -14,35 +14,33 @@ package com.boat.bwui.render
 		
 		override protected function render_impl():void 
 		{
-			print("render_impl")
-			
 			super.render_impl();
 			
-			if (canRenderProp(RenderFlag.x))
+			if (validateRenderFlag(RenderFlag.x))
 			{
 				x = _component.x;
-				printProp("x");
+				//printProp("x");
 			}
 			
-			if (canRenderProp(RenderFlag.y))
+			if (validateRenderFlag(RenderFlag.y))
 			{
 				y = _component.y;
-				printProp("y");
+				//printProp("y");
 			}
 			
-			if (canRenderProp(RenderFlag.width))
+			if (validateRenderFlag(RenderFlag.width))
 			{
 				width = _component.width;
-				printProp("width");
+				//printProp("width");
 			}
 			
-			if (canRenderProp(RenderFlag.height))
+			if (validateRenderFlag(RenderFlag.height))
 			{
 				height = _component.height;
-				printProp("height");
+				//printProp("height");
 			}
 			
-		}		
+		}
 		
 	}
 

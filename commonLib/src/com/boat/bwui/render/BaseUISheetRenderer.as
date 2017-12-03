@@ -14,6 +14,10 @@ package com.boat.bwui.render
 		public function BaseUISheetRenderer() 
 		{
 			super();
+			
+			//graphics.beginFill(0xFF00FF);
+			//graphics.drawRect(0, 0, 20, 20);
+			//graphics.endFill();
 		}
 		
 		private function get uiSheet():BaseUISheet
@@ -22,19 +26,12 @@ package com.boat.bwui.render
 		}
 		
 		override protected function render_impl():void 
-		{
-			var removedFlags:Number = removeRenderFlags(RenderFlag.width)
+		{						
 			super.render_impl();
-			_renderFlags |= removedFlags;
 			
-			if (canRenderProp(RenderFlag.childIndex))
+			if (validateRenderFlag(RenderFlag.childIndex))
 			{
-				refreshZIndex();
-			}
-			
-			if (canRenderProp(RenderFlag.width))
-			{
-				print("www");
+				//refreshZIndex();
 			}
 		}
 		

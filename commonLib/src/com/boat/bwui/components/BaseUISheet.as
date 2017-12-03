@@ -50,6 +50,7 @@ package com.boat.bwui.components
 				}
 				_childDic[child.name] = child;
 				child.setParent(this);
+				child.upperVisible = displayVisible;
 				dispatchEvent(new UIEvent(UIEvent.ADDED, child, true));
 				setRenderFlag(RenderFlag.childIndex);
 			}
@@ -66,6 +67,7 @@ package com.boat.bwui.components
 					_childList.splice(index, 1);
 					delete _childDic[child.name];
 					child.setParent(null);
+					child.upperVisible = true;
 					dispatchEvent(new UIEvent(UIEvent.REMOVED, child, true));
 					setRenderFlag(RenderFlag.childIndex);
 				}
@@ -91,6 +93,38 @@ package com.boat.bwui.components
 		public function getChildIndex(child:BaseUIComponent):int
 		{
 			return _childList.indexOf(child);
+		}
+		
+		override public function set visible(value:Boolean):void 
+		{
+			if (_visible == value)
+			{
+				return;
+			}
+			super.visible = value;
+			if (_upperVisible) {
+				refreshChildrenUpperVisible();
+			}
+		}
+		
+		override internal function set upperVisible(value:Boolean):void 
+		{
+			if (_upperVisible == value)
+			{
+				return;
+			}
+			super.upperVisible = value;
+			if (_visible) {
+				refreshChildrenUpperVisible();
+			}
+		}
+		
+		protected function refreshChildrenUpperVisible():void
+		{
+			for each (var child:BaseUIComponent in _childDic) 
+			{
+				child.upperVisible = displayVisible;
+			}
 		}
 	}
 

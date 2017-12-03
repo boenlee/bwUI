@@ -24,8 +24,10 @@ package com.boat.bwui.components
 		protected var _height:Number = 0;
 		protected var _enabled:Boolean = true;
 		protected var _visible:Boolean = true;
+		protected var _upperVisible:Boolean = true;
 		
 		protected var _renderer:IRenderer;
+		protected var _isRenderInvisible:Boolean = false;
 		
 		public function BaseUIComponent(nm:String) 
 		{
@@ -51,6 +53,10 @@ package com.boat.bwui.components
 		
 		public function set width(value:Number):void 
 		{
+			if (_width == value)
+			{
+				return;
+			}
 			_width = value;
 			setRenderFlag(RenderFlag.width);
 		}
@@ -62,6 +68,10 @@ package com.boat.bwui.components
 		
 		public function set height(value:Number):void 
 		{
+			if (_height == value)
+			{
+				return;
+			}
 			_height = value;
 			setRenderFlag(RenderFlag.height);
 		}
@@ -73,6 +83,10 @@ package com.boat.bwui.components
 		
 		public function set x(value:Number):void 
 		{
+			if (_x == value)
+			{
+				return;
+			}
 			_x = value;
 			setRenderFlag(RenderFlag.x);
 		}
@@ -84,6 +98,10 @@ package com.boat.bwui.components
 		
 		public function set y(value:Number):void 
 		{
+			if (_y == value)
+			{
+				return;
+			}
 			_y = value;
 			setRenderFlag(RenderFlag.y);
 		}
@@ -107,6 +125,10 @@ package com.boat.bwui.components
 		
 		public function set enabled(value:Boolean):void 
 		{
+			if (_enabled == value)
+			{
+				return;
+			}
 			_enabled = value;
 			setRenderFlag(RenderFlag.enabled);
 		}
@@ -118,8 +140,37 @@ package com.boat.bwui.components
 		
 		public function set visible(value:Boolean):void 
 		{
+			if (_visible == value)
+			{
+				return;
+			}
 			_visible = value;
 			setRenderFlag(RenderFlag.visible);
+		}
+		
+		internal function get upperVisible():Boolean 
+		{
+			return _upperVisible;
+		}
+		
+		internal function set upperVisible(value:Boolean):void 
+		{
+			_upperVisible = value;
+		}
+		
+		public function get displayVisible():Boolean
+		{
+			return _visible && _upperVisible;
+		}
+		
+		public function get isRenderInvisible():Boolean 
+		{
+			return _isRenderInvisible;
+		}
+		
+		public function set isRenderInvisible(value:Boolean):void 
+		{
+			_isRenderInvisible = value;
 		}
 		
 		public function get parent():BaseUISheet

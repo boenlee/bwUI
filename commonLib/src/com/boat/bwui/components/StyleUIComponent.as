@@ -1,7 +1,8 @@
 package com.boat.bwui.components 
 {
 	import com.boat.bwui.components.BaseUISheet;
-	import com.boat.bwui.style.IStyleSetter;
+	import com.boat.bwui.style.IStyleFrame;
+	import com.boat.bwui.style.IStyleSet;
 	import flash.display.DisplayObject;
 	/**
 	 * ...
@@ -9,7 +10,9 @@ package com.boat.bwui.components
 	 */
 	public class StyleUIComponent extends BaseUISheet 
 	{
-		protected var mStyleSetter:IStyleSetter;
+		protected var _styleSet:IStyleSet;
+		
+		protected var _styleFrame:*;
 		
 		public function StyleUIComponent(nm:String) 
 		{
@@ -17,18 +20,17 @@ package com.boat.bwui.components
 			
 		}
 		
-		public function setStyleSetter(styleSetter:IStyleSetter):void
+		public function setStyleSet(styleSet:IStyleSet):void
 		{
-			mStyleSetter = styleSetter;
-			setupStyle();
+			_styleSet = styleSet;
 		}
 		
-		protected function setupStyle():void {
-			
-		}
-		
-		public function getCurrentGraphic():DisplayObject
+		public function getStyleFrame():IStyleFrame
 		{
+			if (_styleSet)
+			{
+				return _styleSet.getStyleFrame(_styleFrame);
+			}
 			return null;
 		}
 	}

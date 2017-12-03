@@ -1,6 +1,6 @@
 package com.boat.bwui.mgr 
 {
-	import com.boat.bwui.style.IStyleSetter;
+	import com.boat.bwui.style.IStyleSet;
 	/**
 	 * ...
 	 * @author 
@@ -22,7 +22,7 @@ package com.boat.bwui.mgr
 			return mInstance;
 		}
 		
-		public function getDefaultStyleSetter(compClassName:String):IStyleSetter
+		public function getDefaultStyleSetter(compClassName:String):IStyleSet
 		{
 			return null;
 		}

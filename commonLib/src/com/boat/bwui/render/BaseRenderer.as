@@ -11,14 +11,13 @@ package com.boat.bwui.render
 	{
 		protected var _component:BaseUIComponent;
 		
-		protected var _renderFlags:Number = 0;
+		protected var _renderFlags:Number = RenderFlag.all;
+		protected var _invalidRenderFlags:Number = 0;
 		
 		public function BaseRenderer() 
 		{
 			super();
 		}
-		
-		/* INTERFACE com.boat.bwui.render.IRenderer */
 		
 		public function set component(comp:BaseUIComponent):void 
 		{
@@ -41,7 +40,7 @@ package com.boat.bwui.render
 			return _renderFlags;
 		}
 		
-		protected function removeRenderFlags(...flags):Number
+		/*protected function removeRenderFlags(...flags):Number
 		{
 			var removedFlags:Number = 0;
 			var flag:Number;
@@ -56,35 +55,42 @@ package com.boat.bwui.render
 			}
 			
 			return removedFlags;
-		}
+		}*/
 		
-		protected function canRenderProp(flag:Number):Boolean
-		{
-			return (_renderFlags & RenderFlag.all) != 0 || (_renderFlags & flag) != 0;
+		protected function validateRenderFlag(flag:Number):Boolean
+		{			
+			return (_renderFlags & (RenderFlag.all | flag)) != 0 && (_invalidRenderFlags & flag) == 0;
 		}
 		
 		public function render():void 
 		{
-			print("render")
+			//print("render")
 			
-			print(_renderFlags);
+			//print(_renderFlags);
 			
-			if (canRenderProp(RenderFlag.visible))
+			if (validateRenderFlag(RenderFlag.visible))
 			{
 				visible = _component.visible;
 			}
-			printProp("visible");
-			if (!visible)
+			if (!_component.displayVisible && !_component.isRenderInvisible)
 			{
 				return;
 			}
 			render_impl();
 			_renderFlags = 0;
+			_invalidRenderFlags = 0;
 		}
 		
 		protected function render_impl():void
 		{
-			print("base render_impl")
+			
+		}
+		
+		protected function callSuperRenderImplWithInvalidFlags(superRenderImpl:Function, invalidFlags:Number):void
+		{
+			_invalidRenderFlags = invalidFlags;
+			superRenderImpl();
+			_invalidRenderFlags = 0;
 		}
 		
 		public function dispose():void

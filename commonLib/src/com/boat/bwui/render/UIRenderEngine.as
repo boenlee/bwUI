@@ -58,7 +58,6 @@ package com.boat.bwui.render
 				{
 					renderer = _rendererFactory.getRenderer(comp);
 					comp.setRenderer(renderer);
-					comp.setRenderFlag(RenderFlag.all);
 				}
 			}
 			
