@@ -21,7 +21,7 @@ package com.boat.bwui.render
 		{
 			if (styleFrame is PolygonStyleFrame)
 			{
-				//renderer.graphics.clear();
+				renderer.graphics.clear();
 				
 				var polygonStyleFrame:PolygonStyleFrame = styleFrame as PolygonStyleFrame;
 				var polygonVo:IPolygonVo = polygonStyleFrame.polygonVo;
@@ -33,13 +33,9 @@ package com.boat.bwui.render
 					{
 						renderer.graphics.lineStyle(lineStyleVo.thickness, lineStyleVo.color, lineStyleVo.alpha);
 					}
-					/*renderer.graphics.beginFill(rectangleVo.color, rectangleVo.alpha);
+					renderer.graphics.beginFill(rectangleVo.color, rectangleVo.alpha);
 					renderer.graphics.drawRect(rectangleVo.x, rectangleVo.y, rectangleVo.width, rectangleVo.height);
-					renderer.graphics.endFill();*/
-					
-					renderer.graphics.beginFill(0);
-					renderer.graphics.drawRect(0, 0, 10, 10);
-					renderer.graphics.endFill()
+					renderer.graphics.endFill();
 				}
 			}
 		}

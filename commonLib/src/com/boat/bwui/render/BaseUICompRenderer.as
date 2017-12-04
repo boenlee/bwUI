@@ -30,13 +30,13 @@ package com.boat.bwui.render
 			
 			if (validateRenderFlag(RenderFlag.width))
 			{
-				width = _component.width;
+				//width = _component.width;
 				//printProp("width");
 			}
 			
 			if (validateRenderFlag(RenderFlag.height))
 			{
-				height = _component.height;
+				//height = _component.height;
 				//printProp("height");
 			}
 			

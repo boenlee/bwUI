@@ -13,14 +13,7 @@ package com.boat.bwui.render
 		public function StyleUICompRenderer() 
 		{
 			super();
-			//_graphicRenderAgent = new GraphicRenderAgent();
-			
-			graphics.beginFill(0xFF00FF, 1);
-			graphics.drawRect(10, 10, 50, 50);
-			graphics.endFill();
-			
-			width = 100;
-			height = 100;
+			_graphicRenderAgent = new GraphicRenderAgent();
 		}
 		
 		private function get styleUI():StyleUIComponent
@@ -30,31 +23,34 @@ package com.boat.bwui.render
 		
 		override protected function render_impl():void 
 		{			
-			//callSuperRenderImplWithInvalidFlags(super.render_impl, RenderFlag.width | RenderFlag.height);
+			callSuperRenderImplWithInvalidFlags(super.render_impl, RenderFlag.width | RenderFlag.height);
 			
-			if (!styleUI)
+			if (styleUI)
 			{
 				var styleFrame:IStyleFrame = styleUI.getStyleFrame();
-				if (styleFrame.redrawOnResize)
+				if (styleFrame)
 				{
-					if (validateRenderFlag(RenderFlag.width) || validateRenderFlag(RenderFlag.height) || validateRenderFlag(RenderFlag.graphic))
+					if (styleFrame.redrawOnResize)
 					{
-						_graphicRenderAgent.redraw(this, _component.width, _component.height, styleFrame);
+						if (validateRenderFlag(RenderFlag.width) || validateRenderFlag(RenderFlag.height) || validateRenderFlag(RenderFlag.graphic))
+						{
+							_graphicRenderAgent.redraw(this, _component.width, _component.height, styleFrame);
+						}
 					}
-				}
-				else
-				{
-					if (validateRenderFlag(RenderFlag.graphic))
+					else
 					{
-						_graphicRenderAgent.redraw(this, _component.width, _component.height, styleFrame);
-					}
-					if (validateRenderFlag(RenderFlag.width))
-					{						
-						//width = _component.width;
-					}
-					if (validateRenderFlag(RenderFlag.height))
-					{
-						//height = _component.height;
+						if (validateRenderFlag(RenderFlag.graphic))
+						{
+							_graphicRenderAgent.redraw(this, _component.width, _component.height, styleFrame);
+						}
+						if (validateRenderFlag(RenderFlag.width))
+						{						
+							width = _component.width;
+						}
+						if (validateRenderFlag(RenderFlag.height))
+						{
+							height = _component.height;
+						}
 					}
 				}
 			}

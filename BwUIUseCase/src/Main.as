@@ -37,9 +37,6 @@ package
 		{
 			var uiRootRenderer:BaseUISheetRenderer = new BaseUISheetRenderer();
 			addChild(uiRootRenderer);
-			//uiRootRenderer.graphics.beginFill(0);
-			//uiRootRenderer.graphics.drawRect(0, 0, 10, 10);
-			//uiRootRenderer.graphics.endFill()
 			
 			UIStage.instance.move(0, 0);
 			UIStage.instance.setSize(stage.stageWidth, stage.stageHeight);
@@ -61,20 +58,16 @@ package
 			
 			
 			var imageStyleSet:ImageStyleSet = new ImageStyleSet();
-			imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectanglePolygonVo(0, 0, 50, 20, 0xFFFF00, 0.8), null, true));
+			imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectanglePolygonVo(0, 0, 50, 20, 0xFF00FF, 1), null, true));
 			
 			var rectangleComp:StyleUIComponent = new StyleUIComponent("testComp1");
 			UIStage.instance.getLayer(0).addChild(rectangleComp);
 			
-			rectangleComp.x = 0;
-			rectangleComp.y = 0;
+			rectangleComp.x = 10;
+			rectangleComp.y = 10;
 			rectangleComp.width = 50;
-			rectangleComp.height = 20;
-			//rectangleComp.setStyleSet(imageStyleSet);
-			
-			//var renderer:BaseUISheetRenderer = new BaseUISheetRenderer();
-			//rectangleComp.setRenderer(renderer);
-			
+			rectangleComp.height = 50;
+			rectangleComp.setStyleSet(imageStyleSet);			
 			
 		}
 		

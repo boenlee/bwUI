@@ -14,10 +14,6 @@ package com.boat.bwui.render
 		public function BaseUISheetRenderer() 
 		{
 			super();
-			
-			//graphics.beginFill(0xFF00FF);
-			//graphics.drawRect(0, 0, 20, 20);
-			//graphics.endFill();
 		}
 		
 		private function get uiSheet():BaseUISheet
@@ -31,8 +27,15 @@ package com.boat.bwui.render
 			
 			if (validateRenderFlag(RenderFlag.childIndex))
 			{
-				//refreshZIndex();
+				refreshZIndex();
 			}
+			
+			/*if (_component.name == "UIStage")
+			{
+				graphics.beginFill(0xFF00FF);
+				graphics.drawRect(0, 0, 20, 20);
+				graphics.endFill();
+			}*/
 		}
 		
 		private function refreshZIndex():void
