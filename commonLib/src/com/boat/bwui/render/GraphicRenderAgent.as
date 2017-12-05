@@ -2,9 +2,11 @@ package com.boat.bwui.render
 {
 	import com.boat.bwui.style.IStyleFrame;
 	import com.boat.bwui.style.frames.PolygonStyleFrame;
+	import com.boat.bwui.style.vo.IPolygonFillVo;
 	import com.boat.bwui.style.vo.IPolygonVo;
 	import com.boat.bwui.style.vo.LineStyleVo;
 	import com.boat.bwui.style.vo.RectanglePolygonVo;
+	import com.boat.bwui.style.vo.SolidColorFillVo;
 	/**
 	 * ...
 	 * @author boen
@@ -25,6 +27,7 @@ package com.boat.bwui.render
 				
 				var polygonStyleFrame:PolygonStyleFrame = styleFrame as PolygonStyleFrame;
 				var polygonVo:IPolygonVo = polygonStyleFrame.polygonVo;
+				var fillVo:SolidColorFillVo = polygonStyleFrame.polygonFillVo as SolidColorFillVo;
 				var lineStyleVo:LineStyleVo = polygonStyleFrame.lineStyleVo;
 				if (polygonVo is RectanglePolygonVo)
 				{
@@ -33,8 +36,11 @@ package com.boat.bwui.render
 					{
 						renderer.graphics.lineStyle(lineStyleVo.thickness, lineStyleVo.color, lineStyleVo.alpha);
 					}
-					renderer.graphics.beginFill(rectangleVo.color, rectangleVo.alpha);
-					renderer.graphics.drawRect(rectangleVo.x, rectangleVo.y, rectangleVo.width, rectangleVo.height);
+					if (fillVo)
+					{
+						renderer.graphics.beginFill(fillVo.color, fillVo.alpha);
+					}
+					renderer.graphics.drawRect(0, 0, width,height);
 					renderer.graphics.endFill();
 				}
 			}

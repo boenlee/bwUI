@@ -1,6 +1,7 @@
 package com.boat.bwui.style.frames 
 {
 	import com.boat.bwui.style.IStyleFrame;
+	import com.boat.bwui.style.vo.IPolygonFillVo;
 	import com.boat.bwui.style.vo.IPolygonVo;
 	import com.boat.bwui.style.vo.LineStyleVo;
 	import com.boat.bwui.style.vo.RectanglePolygonVo;
@@ -14,11 +15,13 @@ package com.boat.bwui.style.frames
 		protected var _redrawOnResize:Boolean;
 		
 		private var _polygonVo:IPolygonVo;
+		private var _polygonFillVo:IPolygonFillVo;
 		private var _lineStyleVo:LineStyleVo;
 		
-		public function PolygonStyleFrame(plgnVo:IPolygonVo, lnStyleVo:LineStyleVo = null, rdrwOnRsz:Boolean = false)
+		public function PolygonStyleFrame(plgnVo:IPolygonVo, fillVo:IPolygonFillVo, lnStyleVo:LineStyleVo = null, rdrwOnRsz:Boolean = false)
 		{
 			_polygonVo = plgnVo;
+			_polygonFillVo = fillVo;
 			_lineStyleVo = lnStyleVo;
 			_redrawOnResize = rdrwOnRsz;
 		}
@@ -51,6 +54,16 @@ package com.boat.bwui.style.frames
 		public function set lineStyleVo(value:LineStyleVo):void 
 		{
 			_lineStyleVo = value;
+		}
+		
+		public function get polygonFillVo():IPolygonFillVo 
+		{
+			return _polygonFillVo;
+		}
+		
+		public function set polygonFillVo(value:IPolygonFillVo):void 
+		{
+			_polygonFillVo = value;
 		}
 		
 	}

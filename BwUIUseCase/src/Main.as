@@ -10,7 +10,9 @@ package
 	import com.boat.bwui.render.UIRenderEngine;
 	import com.boat.bwui.style.ImageStyleSet;
 	import com.boat.bwui.style.frames.PolygonStyleFrame;
+	import com.boat.bwui.style.vo.LineStyleVo;
 	import com.boat.bwui.style.vo.RectanglePolygonVo;
+	import com.boat.bwui.style.vo.SolidColorFillVo;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -58,7 +60,7 @@ package
 			
 			
 			var imageStyleSet:ImageStyleSet = new ImageStyleSet();
-			imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectanglePolygonVo(0, 0, 50, 20, 0xFF00FF, 1), null, true));
+			imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectanglePolygonVo(), new SolidColorFillVo(0xFF00FF, 1), new LineStyleVo(1, 0), false));
 			
 			var rectangleComp:StyleUIComponent = new StyleUIComponent("testComp1");
 			UIStage.instance.getLayer(0).addChild(rectangleComp);
@@ -67,7 +69,7 @@ package
 			rectangleComp.y = 10;
 			rectangleComp.width = 50;
 			rectangleComp.height = 50;
-			rectangleComp.setStyleSet(imageStyleSet);			
+			rectangleComp.setStyleSet(imageStyleSet);
 			
 		}
 		
