@@ -1,5 +1,6 @@
 package com.boat.bwui.style 
 {
+	import flash.display.Sprite;
 	
 	/**
 	 * ...
@@ -9,6 +10,7 @@ package com.boat.bwui.style
 	{
 		function get redrawOnResize():Boolean;
 		function set redrawOnResize(value:Boolean):void;
+		function setStyleTo(sprite:Sprite, width:Number, height:Number):void;
 	}
 	
 }

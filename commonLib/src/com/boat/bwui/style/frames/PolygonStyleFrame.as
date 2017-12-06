@@ -1,10 +1,10 @@
 package com.boat.bwui.style.frames 
 {
 	import com.boat.bwui.style.IStyleFrame;
-	import com.boat.bwui.style.vo.IPolygonFillVo;
-	import com.boat.bwui.style.vo.IPolygonVo;
-	import com.boat.bwui.style.vo.LineStyleVo;
-	import com.boat.bwui.style.vo.RectanglePolygonVo;
+	import com.boat.bwui.style.frames.setters.IFillSetter;
+	import com.boat.bwui.style.frames.setters.IPolygonSetter;
+	import com.boat.bwui.style.frames.setters.SolidLineSetter;
+	import flash.display.Sprite;
 	
 	/**
 	 * ...
@@ -14,15 +14,15 @@ package com.boat.bwui.style.frames
 	{
 		protected var _redrawOnResize:Boolean;
 		
-		private var _polygonVo:IPolygonVo;
-		private var _polygonFillVo:IPolygonFillVo;
-		private var _lineStyleVo:LineStyleVo;
+		private var _polygonSetter:IPolygonSetter;
+		private var _fillSetter:IFillSetter;
+		private var _lineStyleSetter:SolidLineSetter;
 		
-		public function PolygonStyleFrame(plgnVo:IPolygonVo, fillVo:IPolygonFillVo, lnStyleVo:LineStyleVo = null, rdrwOnRsz:Boolean = false)
+		public function PolygonStyleFrame(plgnSetter:IPolygonSetter, filSetter:IFillSetter, lnStyleSetter:SolidLineSetter = null, rdrwOnRsz:Boolean = false)
 		{
-			_polygonVo = plgnVo;
-			_polygonFillVo = fillVo;
-			_lineStyleVo = lnStyleVo;
+			_polygonSetter = plgnSetter;
+			_fillSetter = filSetter;
+			_lineStyleSetter = lnStyleSetter;
 			_redrawOnResize = rdrwOnRsz;
 		}
 		
@@ -36,34 +36,22 @@ package com.boat.bwui.style.frames
 			_redrawOnResize = value;
 		}
 		
-		public function get polygonVo():IPolygonVo 
+		public function setStyleTo(sprite:Sprite, width:Number, height:Number):void
 		{
-			return _polygonVo;
-		}
-		
-		public function set polygonVo(value:IPolygonVo):void 
-		{
-			_polygonVo = value;
-		}
-		
-		public function get lineStyleVo():LineStyleVo 
-		{
-			return _lineStyleVo;
-		}
-		
-		public function set lineStyleVo(value:LineStyleVo):void 
-		{
-			_lineStyleVo = value;
-		}
-		
-		public function get polygonFillVo():IPolygonFillVo 
-		{
-			return _polygonFillVo;
-		}
-		
-		public function set polygonFillVo(value:IPolygonFillVo):void 
-		{
-			_polygonFillVo = value;
+			sprite.graphics.clear();
+			if (_lineStyleSetter)
+			{
+				_lineStyleSetter.setLineStyleTo(sprite.graphics);
+			}
+			if (_fillSetter)
+			{
+				_fillSetter.setFillTo(sprite.graphics, width, height);
+			}
+			if (_polygonSetter)
+			{
+				_polygonSetter.setPolygonTo(sprite.graphics, width, height);
+			}
+			sprite.graphics.endFill();
 		}
 		
 	}

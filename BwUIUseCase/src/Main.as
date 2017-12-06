@@ -10,11 +10,12 @@ package
 	import com.boat.bwui.render.UIRenderEngine;
 	import com.boat.bwui.style.ImageStyleSet;
 	import com.boat.bwui.style.frames.PolygonStyleFrame;
-	import com.boat.bwui.style.vo.LineStyleVo;
-	import com.boat.bwui.style.vo.RectanglePolygonVo;
-	import com.boat.bwui.style.vo.SolidColorFillVo;
+	import com.boat.bwui.style.frames.setters.SolidLineSetter;
+	import com.boat.bwui.style.frames.setters.RectangleSetter;
+	import com.boat.bwui.style.frames.setters.SolidColorSetter;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.utils.setTimeout;
 	
 	/**
 	 * ...
@@ -60,7 +61,7 @@ package
 			
 			
 			var imageStyleSet:ImageStyleSet = new ImageStyleSet();
-			imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectanglePolygonVo(), new SolidColorFillVo(0xFF00FF, 1), new LineStyleVo(1, 0), false));
+			imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectangleSetter(), new SolidColorSetter(0xFF00FF, 1), new SolidLineSetter(1, 0, 0.4), false));
 			
 			var rectangleComp:StyleUIComponent = new StyleUIComponent("testComp1");
 			UIStage.instance.getLayer(0).addChild(rectangleComp);
@@ -71,6 +72,11 @@ package
 			rectangleComp.height = 50;
 			rectangleComp.setStyleSet(imageStyleSet);
 			
+			
+			setTimeout(function():void {
+				rectangleComp.width = 600;
+				rectangleComp.height = 500;
+			}, 3000);
 		}
 		
 	}
