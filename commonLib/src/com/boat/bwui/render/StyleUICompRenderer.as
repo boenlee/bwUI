@@ -9,16 +9,13 @@ package com.boat.bwui.render
 	 */
 	public class StyleUICompRenderer extends BaseUISheetRenderer 
 	{
-		protected var _graphicRenderAgent:GraphicRenderAgent;
-		
-		protected var _styleChild:Sprite;
+		protected var _canvas:Sprite;
 		
 		public function StyleUICompRenderer() 
 		{
 			super();
-			_graphicRenderAgent = new GraphicRenderAgent();
-			_styleChild = new Sprite();
-			addChild(_styleChild);
+			_canvas = new Sprite();
+			addChild(_canvas);
 		}
 		
 		private function get styleUI():StyleUIComponent
@@ -38,27 +35,23 @@ package com.boat.bwui.render
 					if (styleFrame.redrawOnResize)
 					{
 						if (validateRenderFlag(RenderFlag.width) || validateRenderFlag(RenderFlag.height) || validateRenderFlag(RenderFlag.graphic))
-						{
-							//_graphicRenderAgent.redraw(this, _component.width, _component.height, styleFrame);
-							
-							styleFrame.setStyleTo(_styleChild, _component.width, component.height);
+						{							
+							styleFrame.setStyleTo(_canvas, _component.width, component.height);
 						}
 					}
 					else
 					{
 						if (validateRenderFlag(RenderFlag.graphic))
-						{
-							//_graphicRenderAgent.redraw(this, _component.width, _component.height, styleFrame);
-							
-							styleFrame.setStyleTo(_styleChild, _component.width, component.height);
+						{							
+							styleFrame.setStyleTo(_canvas, _component.width, component.height);
 						}
 						if (validateRenderFlag(RenderFlag.width))
 						{						
-							_styleChild.width = _component.width;
+							_canvas.width = _component.width;
 						}
 						if (validateRenderFlag(RenderFlag.height))
 						{
-							_styleChild.height = _component.height;
+							_canvas.height = _component.height;
 						}
 					}
 				}

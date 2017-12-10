@@ -9,6 +9,7 @@ package com.boat.bwui.style.frames.setters
 	public interface IFillSetter 
 	{
 		function setFillTo(graphic:Graphics, width:Number = 0, height:Number = 0):void;
+		function setLineFillTo(graphic:Graphics):void;
 	}
 	
 }

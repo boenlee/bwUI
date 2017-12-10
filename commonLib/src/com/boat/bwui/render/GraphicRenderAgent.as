@@ -4,7 +4,7 @@ package com.boat.bwui.render
 	import com.boat.bwui.style.frames.PolygonStyleFrame;
 	import com.boat.bwui.style.frames.setters.IFillSetter;
 	import com.boat.bwui.style.frames.setters.IPolygonSetter;
-	import com.boat.bwui.style.frames.setters.SolidLineSetter;
+	import com.boat.bwui.style.frames.setters.LineStyleSetter;
 	import com.boat.bwui.style.frames.setters.RectangleSetter;
 	import com.boat.bwui.style.frames.setters.SolidColorSetter;
 	/**

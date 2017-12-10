@@ -9,10 +9,16 @@ package
 	import com.boat.bwui.render.RenderablePool;
 	import com.boat.bwui.render.UIRenderEngine;
 	import com.boat.bwui.style.ImageStyleSet;
+	import com.boat.bwui.style.frames.ImageStyleFrame;
 	import com.boat.bwui.style.frames.PolygonStyleFrame;
-	import com.boat.bwui.style.frames.setters.SolidLineSetter;
+	import com.boat.bwui.style.frames.setters.BitmapFillSetter;
+	import com.boat.bwui.style.frames.setters.GradientFillSetter;
+	import com.boat.bwui.style.frames.setters.LineStyleSetter;
 	import com.boat.bwui.style.frames.setters.RectangleSetter;
 	import com.boat.bwui.style.frames.setters.SolidColorSetter;
+	import com.boat.bwui.style.types.BitmapRepeatType;
+	import flash.display.BitmapData;
+	import flash.display.GradientType;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.utils.setTimeout;
@@ -60,8 +66,15 @@ package
 			UIStage.instance.getLayer(0).height = 1000;
 			
 			
+			var bmd:BitmapData = new BitmapData(2, 2, true, 0);
+			bmd.setPixel32(0, 0, 0xFF000000);
+			bmd.setPixel32(0, 1, 0x55FF0000);
+			bmd.setPixel32(1, 1, 0xFF000000);
+			bmd.setPixel32(1, 0, 0x55FF0000);
+			
 			var imageStyleSet:ImageStyleSet = new ImageStyleSet();
-			imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectangleSetter(), new SolidColorSetter(0xFF00FF, 1), new SolidLineSetter(1, 0, 0.4), false));
+			//imageStyleSet.setStyleFrame(new PolygonStyleFrame(new RectangleSetter(5), new BitmapFillSetter(bmd), new LineStyleSetter(new BitmapFillSetter(bmd), 2, true, "normal"), true));
+			imageStyleSet.setStyleFrame(new ImageStyleFrame(bmd, BitmapRepeatType.NO_REPEAT, true, true));
 			
 			var rectangleComp:StyleUIComponent = new StyleUIComponent("testComp1");
 			UIStage.instance.getLayer(0).addChild(rectangleComp);
@@ -74,8 +87,8 @@ package
 			
 			
 			setTimeout(function():void {
-				rectangleComp.width = 600;
-				rectangleComp.height = 500;
+				rectangleComp.width = 400;
+				rectangleComp.height = 400;
 			}, 3000);
 		}
 		

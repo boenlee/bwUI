@@ -23,6 +23,11 @@ package com.boat.bwui.style.frames.setters
 				graphic.beginFill(color, alpha);
 			}
 		}
+		
+		public function setLineFillTo(graphic:Graphics):void
+		{
+			
+		}
 	}
 
 }

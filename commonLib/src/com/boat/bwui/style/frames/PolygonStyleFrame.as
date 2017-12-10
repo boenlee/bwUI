@@ -2,41 +2,30 @@ package com.boat.bwui.style.frames
 {
 	import com.boat.bwui.style.IStyleFrame;
 	import com.boat.bwui.style.frames.setters.IFillSetter;
+	import com.boat.bwui.style.frames.setters.ILineStyleSetter;
 	import com.boat.bwui.style.frames.setters.IPolygonSetter;
-	import com.boat.bwui.style.frames.setters.SolidLineSetter;
 	import flash.display.Sprite;
 	
 	/**
 	 * ...
 	 * @author boen
 	 */
-	public class PolygonStyleFrame implements IStyleFrame 
-	{
-		protected var _redrawOnResize:Boolean;
-		
+	public class PolygonStyleFrame extends BaseStyleFrame implements IStyleFrame 
+	{		
 		private var _polygonSetter:IPolygonSetter;
 		private var _fillSetter:IFillSetter;
-		private var _lineStyleSetter:SolidLineSetter;
+		private var _lineStyleSetter:ILineStyleSetter;
 		
-		public function PolygonStyleFrame(plgnSetter:IPolygonSetter, filSetter:IFillSetter, lnStyleSetter:SolidLineSetter = null, rdrwOnRsz:Boolean = false)
+		public function PolygonStyleFrame(plgnSetter:IPolygonSetter, fllSetter:IFillSetter, lnStyleSetter:ILineStyleSetter = null, rdrwOnRsz:Boolean = false)
 		{
+			super(rdrwOnRsz);
 			_polygonSetter = plgnSetter;
-			_fillSetter = filSetter;
+			_fillSetter = fllSetter;
 			_lineStyleSetter = lnStyleSetter;
 			_redrawOnResize = rdrwOnRsz;
 		}
 		
-		public function get redrawOnResize():Boolean
-		{
-			return _redrawOnResize;
-		}
-		
-		public function set redrawOnResize(value:Boolean):void
-		{
-			_redrawOnResize = value;
-		}
-		
-		public function setStyleTo(sprite:Sprite, width:Number, height:Number):void
+		override public function setStyleTo(sprite:Sprite, width:Number, height:Number):void
 		{
 			sprite.graphics.clear();
 			if (_lineStyleSetter)
@@ -52,6 +41,36 @@ package com.boat.bwui.style.frames
 				_polygonSetter.setPolygonTo(sprite.graphics, width, height);
 			}
 			sprite.graphics.endFill();
+		}
+		
+		public function get polygonSetter():IPolygonSetter 
+		{
+			return _polygonSetter;
+		}
+		
+		public function set polygonSetter(value:IPolygonSetter):void 
+		{
+			_polygonSetter = value;
+		}
+		
+		public function get fillSetter():IFillSetter 
+		{
+			return _fillSetter;
+		}
+		
+		public function set fillSetter(value:IFillSetter):void 
+		{
+			_fillSetter = value;
+		}
+		
+		public function get lineStyleSetter():ILineStyleSetter 
+		{
+			return _lineStyleSetter;
+		}
+		
+		public function set lineStyleSetter(value:ILineStyleSetter):void 
+		{
+			_lineStyleSetter = value;
 		}
 		
 	}
